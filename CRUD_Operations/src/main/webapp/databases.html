@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Databases · DataForge</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <nav>
+    <div class="logo"><span class="dot"></span>DataForge</div>
+    <a href="index.html" class="back-link">← Back to console</a>
+  </nav>
+</header>
+
+<main class="form-page wrap">
+  <div class="form-header">
+    <div class="eyebrow">Operation 03 · Read</div>
+    <h1 style="font-size:clamp(24px,4vw,34px);">View all databases</h1>
+    <p class="hero-sub" style="margin-bottom:0;">Runs <b>SHOW DATABASES</b> over a plain <code>Statement</code> and iterates the <code>ResultSet</code> to list every database on the connected MySQL instance.</p>
+    <div class="servlet-tag">⚙ GET → <b>ViewDatabasesServlet.java</b></div>
+  </div>
+
+  <form class="form-panel" action="databases" method="GET">
+    <div class="terminal-bar">
+      <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+      <span class="terminal-title">view-databases.form</span>
+    </div>
+    <div class="form-body">
+
+     
+
+      <div class="form-footer">
+        <a href="index.html" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary" style="width:auto;">Run SHOW DATABASES →</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="preview-box">
+    <b>Generated SQL:</b> SHOW DATABASES;
+  </div>
+
+  <!--
+    ViewDatabasesServlet can render the ResultSet as rows appended to a
+    table right on this page — reuse the .op-table row styling in
+    style.css for a matching look, or return JSON for a fetch()-driven list.
+  -->
+</main>
+
+<footer class="wrap">
+  <div>DataForge — JDBC + Servlet CRUD Console</div>
+  <div>Built for learning · No ORM · No shortcuts</div>
+</footer>
+
+</body>
+</html>

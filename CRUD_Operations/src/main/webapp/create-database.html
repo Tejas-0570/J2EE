@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Database · DataForge</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <nav>
+    <div class="logo"><span class="dot"></span>DataForge</div>
+    <a href="index.html" class="back-link">← Back to console</a>
+  </nav>
+</header>
+
+<main class="form-page wrap">
+  <div class="form-header">
+    <div class="eyebrow">Operation 01 · Create</div>
+    <h1 style="font-size:clamp(24px,4vw,34px);">Create a new database</h1>
+    <p class="hero-sub" style="margin-bottom:0;">Runs a <b>CREATE DATABASE</b> statement over a plain <code>Statement</code>, using <b>DatabaseMetaData</b> first to check it doesn't already exist.</p>
+    <div class="servlet-tag">⚙ POST → <b>CreateDatabaseServlet.java</b></div>
+  </div>
+
+  <form class="form-panel" action="create-database" method="POST">
+    <div class="terminal-bar">
+      <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+      <span class="terminal-title">new-database.form</span>
+    </div>
+    <div class="form-body">
+
+      <div class="field">
+        <label for="dbName">Database name<span class="req">*</span></label>
+        <input type="text" id="dbName" name="dbName" placeholder="student_portal" required
+          pattern="[A-Za-z_][A-Za-z0-9_]*" title="Letters, numbers, underscores — must start with a letter or underscore">
+        <div class="hint">→ maps to request.getParameter("dbName")</div>
+      </div>
+
+      <div class="form-footer">
+        <a href="index.html" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary" style="width:auto;">Run CREATE DATABASE →</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="preview-box">
+    <b>Generated SQL:</b> CREATE DATABASE IF NOT EXISTS `<span id="preview">student_portal</span>`;
+  </div>
+</main>
+
+<footer class="wrap">
+  <div>DataForge — JDBC + Servlet CRUD Console</div>
+  <div>Built for learning · No ORM · No shortcuts</div>
+</footer>
+
+<script>
+  const input = document.getElementById('dbName');
+  const preview = document.getElementById('preview');
+  input.addEventListener('input', () => { preview.textContent = input.value || 'student_portal'; });
+</script>
+
+</body>
+</html>

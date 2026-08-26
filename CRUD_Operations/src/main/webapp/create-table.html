@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Table · DataForge</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <nav>
+    <div class="logo"><span class="dot"></span>DataForge</div>
+    <a href="index.html" class="back-link">← Back to console</a>
+  </nav>
+</header>
+
+<main class="form-page wrap">
+  <div class="form-header">
+    <div class="eyebrow">Operation 02 · Create</div>
+    <h1 style="font-size:clamp(24px,4vw,34px);">Create a new table</h1>
+    <p class="hero-sub" style="margin-bottom:0;">Parses your column list into a <b>CREATE TABLE</b> statement and executes it with <code>Statement.executeUpdate()</code>.</p>
+    <div class="servlet-tag">⚙ POST → <b>CreateTableServlet.java</b></div>
+  </div>
+
+  <form class="form-panel" action="create-table" method="POST">
+    <div class="terminal-bar">
+      <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+      <span class="terminal-title">new-table.form</span>
+    </div>
+    <div class="form-body">
+
+      <div class="field-row">
+        <div class="field">
+          <label for="dbName">Database<span class="req">*</span></label>
+          <input type="text" id="dbName" name="dbName" placeholder="student_portal" required>
+        </div>
+        <div class="field">
+          <label for="tableName">Table name<span class="req">*</span></label>
+          <input type="text" id="tableName" name="tableName" placeholder="students" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="columns">Columns<span class="req">*</span></label>
+        <textarea id="columns" name="columns" required placeholder="id INT PRIMARY KEY&#10;name VARCHAR(50)&#10;grade VARCHAR(5)"></textarea>
+        <div class="hint">→ one "column_name TYPE(constraints)" per line, joined into the CREATE TABLE body</div>
+      </div>
+
+      <div class="form-footer">
+        <a href="index.html" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary" style="width:auto;">Run CREATE TABLE →</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="preview-box">
+    <b>Generated SQL:</b> CREATE TABLE students (id INT PRIMARY KEY, name VARCHAR(50), grade VARCHAR(5));
+  </div>
+</main>
+
+<footer class="wrap">
+  <div>DataForge — JDBC + Servlet CRUD Console</div>
+  <div>Built for learning · No ORM · No shortcuts</div>
+</footer>
+
+</body>
+</html>

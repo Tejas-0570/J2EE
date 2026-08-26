@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataForge :: JDBC + Servlet CRUD Console</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<div class="grid-bg"></div>
+ 
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow">Personal Project · Java Backend</div>
+    
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+        <span class="terminal-title">DataForgeServlet.java — console</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">jdbc&gt;</span> <span class="kw">CREATE DATABASE</span> student_portal;</div>
+        <div class="t-line out">→ 0 rows affected. Database created.</div>
+        <div class="t-line">&nbsp;</div>
+        <div class="t-line"><span class="t-prompt">jdbc&gt;</span> <span class="kw">CREATE TABLE</span> students (id <span class="kw">INT</span> <span class="kw">PRIMARY KEY</span>, name <span class="kw">VARCHAR</span>(50), grade <span class="kw">VARCHAR</span>(5));</div>
+        <div class="t-line out">→ Table 'students' created.</div>
+        <div class="t-line">&nbsp;</div>
+        <div class="t-line"><span class="t-prompt">jdbc&gt;</span> <span class="kw">INSERT INTO</span> students <span class="kw">VALUES</span> (1, <span class="str">'Aarav Shah'</span>, <span class="str">'A'</span>);</div>
+        <div class="t-line out">→ 1 row inserted via PreparedStatement.</div>
+        <div class="t-line">&nbsp;</div>
+        <div class="t-line"><span class="t-prompt">jdbc&gt;</span> <span class="kw">SELECT</span> * <span class="kw">FROM</span> students;<span class="cursor"></span></div>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="section" id="operations">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-eyebrow">// 01 What it does</div>
+        <h2 class="section-title">CRUD Operation</h2>
+        <p class="section-desc">Click any row to open its form. Submitting it posts straight to the matching Servlet, which opens a JDBC Connection and runs the real SQL statement shown below.</p>
+      </div>
+ 
+      <div class="op-table">
+        <a class="op-row" href="create-database.html">
+          <div class="op-code c">C</div>
+          <div class="op-name">Create Database<span>DatabaseMetaData + Statement</span></div>
+          <div class="op-sql">CREATE DATABASE dbname</div>
+          <div class="op-http">POST /create-database</div>
+          <div class="op-arrow">→</div>
+        </a>
+        <a class="op-row" href="create-table.html">
+          <div class="op-code c">C</div>
+          <div class="op-name">Create Table<span>DatabaseMetaData + Statement</span></div>
+          <div class="op-sql">CREATE TABLE tablename (...)</div>
+          <div class="op-http">POST /create-table</div>
+          <div class="op-arrow">→</div>
+        </a>
+        <a class="op-row" href="insert-records.html">
+          <div class="op-code c">C</div>
+          <div class="op-name">Insert Record<span>PreparedStatement, parameter binding</span></div>
+          <div class="op-sql">INSERT INTO table VALUES (?, ?, ?)</div>
+          <div class="op-http">POST /insert</div>
+          <div class="op-arrow">→</div>
+        </a>
+         <a class="op-row" href="databases.html">
+          <div class="op-code r">D</div>
+          <div class="op-name">View All Databases<span>ResultSet iteration → HTML table</span></div>
+          <div class="op-sql">SHOW DATABASES</div>
+          <div class="op-http">GET /records</div>
+          <div class="op-arrow">→</div>
+        </a>
+        <a class="op-row" href="records.html">
+          <div class="op-code r">R</div>
+          <div class="op-name">View All Records<span>ResultSet iteration → HTML table</span></div>
+          <div class="op-sql">SELECT * FROM table</div>
+          <div class="op-http">GET /records</div>
+          <div class="op-arrow">→</div>
+        </a>
+        <a class="op-row" href="update.html">
+          <div class="op-code u">U</div>
+          <div class="op-name">Update Record<span>PreparedStatement with WHERE clause</span></div>
+          <div class="op-sql">UPDATE table SET col=? WHERE id=?</div>
+          <div class="op-http">POST /update</div>
+          <div class="op-arrow">→</div>
+        </a>
+        <a class="op-row" href="delete.html">
+          <div class="op-code d">D</div>
+          <div class="op-name">Delete Record<span>Confirm dialog → executeUpdate()</span></div>
+          <div class="op-sql">DELETE FROM table WHERE id=?</div>
+          <div class="op-http">POST /delete</div>
+          <div class="op-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-eyebrow">// 02 Under the hood</div>
+        <h2 class="section-title">Three layers, no shortcuts</h2>
+        <p class="section-desc">Deliberately kept close to the metal so each layer's job stays visible.</p>
+      </div>
+ 
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-layer">Frontend</div>
+          <div class="stack-name">HTML</div>
+          <div class="stack-desc">Plain forms and tables — every input maps directly to a column, every submit to a Servlet endpoint.</div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-layer">Backend</div>
+          <div class="stack-name">Java Servlets</div>
+          <div class="stack-desc">doGet / doPost handle routing, request parsing, and call the DAO layer that talks to JDBC directly.</div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-layer">Database</div>
+          <div class="stack-name">MySQL via JDBC</div>
+          <div class="stack-desc">Connection pooling, PreparedStatements, and raw ResultSet handling — the exact things an ORM would hide.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="section" id="path">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-eyebrow">// 03 Why build this</div>
+        <h2 class="section-title">The learning path this project follows</h2>
+        <p class="section-desc">Built in order, so each step forces the next concept.</p>
+      </div>
+ 
+      <div class="path">
+        <div class="path-item">
+          <div class="path-title">1. Connect</div>
+          <div class="path-desc">Load the driver, open a Connection, handle SQLException properly instead of swallowing it.</div>
+        </div>
+        <div class="path-item">
+          <div class="path-title">2. Define schema from code</div>
+          <div class="path-desc">Let the user create databases and tables dynamically — forces real understanding of DDL vs DML.</div>
+        </div>
+        <div class="path-item">
+          <div class="path-title">3. Bind parameters safely</div>
+          <div class="path-desc">Replace string-concatenated SQL with PreparedStatement to prevent injection and learn placeholder binding.</div>
+        </div>
+        <div class="path-item">
+          <div class="path-title">4. Read results back</div>
+          <div class="path-desc">Iterate a ResultSet, map rows to objects, render them — the R in CRUD, done manually.</div>
+        </div>
+        <div class="path-item">
+          <div class="path-title">5. Wire it to Servlets</div>
+          <div class="path-desc">Every form action becomes a doPost/doGet, tying frontend intent to backend SQL execution.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+ 
+<footer class="wrap">
+  <div>DataForge — JDBC + Servlet CRUD Console</div>
+  <div>Built for learning · No ORM · No shortcuts</div>
+</footer>
+ 
+</body>
+</html>
