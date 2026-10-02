@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <hibernate-mapping>
+             <class name="HibernateXMLBased.Hiber.model.Student" table="student_info">
+                    <id name="id" column="sid"></id>
+                    <property name="name" column="sname"></property>
+                    <property name="email" column="semail"></property>
+                    <property name="password" column="spass"></property>
+             
+             </class>
+    
+    
+    </hibernate-mapping>
